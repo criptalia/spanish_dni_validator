@@ -1,5 +1,7 @@
 # spanish_dni_validator
 
+[![Build Status](https://travis-ci.com/criptalia/spanish_dni_validator.svg?branch=master)](https://travis-ci.com/criptalia/spanish_dni_validator)
+
 A Golang module to validate Spanish DNI (Documento Nacional de Identidad) numbers.
 It's a porting of the PHP library at https://github.com/ulabox/nif-validator.
 
