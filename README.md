@@ -102,7 +102,7 @@ func main() {
 }
 ```
 
-# Individual NIF types
+## Individual NIF types
 You can also separately validate individual NIF types:
 ```go
 package main
