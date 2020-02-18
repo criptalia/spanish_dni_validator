@@ -45,10 +45,7 @@ func IsValidEntity(nif string) bool {
  * Just mod 23 the 8 digit number and compare it to the check table
  */
 func IsValidDni(dni string) bool {
-	result, matches, err := regexMatch(DNI_REGEX, dni)
-	if err != nil {
-		panic(err)
-	}
+	result, matches, _ := regexMatch(DNI_REGEX, dni)
 	if !result {
 		return false
 	}

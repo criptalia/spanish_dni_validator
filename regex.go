@@ -4,10 +4,21 @@ import (
 	"regexp"
 )
 
+var regexCache map[string]*regexp.Regexp
+
 func regexMatch(regex, str string) (bool, map[string]string, error) {
-	compiledRegex, err := regexp.Compile(regex)
-	if err != nil {
-		return false, nil, err
+	if regexCache == nil {
+		regexCache = make(map[string]*regexp.Regexp)
+	}
+
+	compiledRegex, ok := regexCache[regex]
+	if !ok {
+		res, err := regexp.Compile(regex)
+		if err != nil {
+			return false, nil, err
+		}
+		compiledRegex = res
+		regexCache[regex] = res
 	}
 	match := compiledRegex.FindStringSubmatch(str)
 	if match == nil {
