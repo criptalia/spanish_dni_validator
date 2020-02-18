@@ -5,18 +5,18 @@ import (
 	"strings"
 )
 
-const NIE_TYPES = "XYZ"
-const DNINIE_CHECK_TABLE = "TRWAGMYFPDXBNJZSQVHLCKE"
+const nieTypes = "XYZ"
+const dniNieCheckTable = "TRWAGMYFPDXBNJZSQVHLCKE"
 
-const NIF_TYPES_WITH_LETTER_CHECK = "PQSW"
-const NIF_TYPES_WITH_NUMBER_CHECK = "ABEH"
+const nifTypesWithLetterCheck = "PQSW"
+const nifTypesWithNumberCheck = "ABEH"
 
-const NIF_LETTER_CHECK_TABLE = "JABCDEFGHI"
+const nifLetterCheckTable = "JABCDEFGHI"
 
-const DNI_REGEX = "^(?P<number>[0-9]{8})(?P<check>[A-Z])$"
-const NIE_REGEX = "^(?P<type>[" + NIE_TYPES + "])(?P<number>[0-9]{7})(?P<check>[A-Z])$"
-const OTHER_PERSONAL_NIF_REGEX = "^(?P<type>[KLM])(?P<number>[0-9]{7})(?P<check>[0-9A-Z])$"
-const CIF_REGEX = "^(?P<type>[ABCDEFGHJNPQRSUVW])(?P<number>[0-9]{7})(?P<check>[0-9A-Z])$"
+const dniRegex = "^(?P<number>[0-9]{8})(?P<check>[A-Z])$"
+const nieRegex = "^(?P<type>[" + nieTypes + "])(?P<number>[0-9]{7})(?P<check>[A-Z])$"
+const otherPersonalNifRegex = "^(?P<type>[KLM])(?P<number>[0-9]{7})(?P<check>[0-9A-Z])$"
+const cifRegex = "^(?P<type>[ABCDEFGHJNPQRSUVW])(?P<number>[0-9]{7})(?P<check>[0-9A-Z])$"
 
 /**
  * Validate Spanish NIFS
@@ -45,7 +45,7 @@ func IsValidEntity(nif string) bool {
  * Just mod 23 the 8 digit number and compare it to the check table
  */
 func IsValidDni(dni string) bool {
-	result, matches, _ := regexMatch(DNI_REGEX, dni)
+	result, matches, _ := regexMatch(dniRegex, dni)
 	if !result {
 		return false
 	}
@@ -67,7 +67,7 @@ func IsValidDni(dni string) bool {
 		return false
 	}
 
-	return []rune(DNINIE_CHECK_TABLE)[numberInt % 23] == []rune(check)[0]
+	return []rune(dniNieCheckTable)[numberInt % 23] == []rune(check)[0]
 }
 
 /**
@@ -75,7 +75,7 @@ func IsValidDni(dni string) bool {
  * The first letter needs an equivalent number before the mod operation
  */
 func IsValidNie(nie string) bool {
-	result, matches, _ := regexMatch(NIE_REGEX, nie)
+	result, matches, _ := regexMatch(nieRegex, nie)
 	if !result {
 		return false
 	}
@@ -93,7 +93,7 @@ func IsValidNie(nie string) bool {
 		return false
 	}
 
-	nieTypeInt := strings.Index(NIE_TYPES, regType)
+	nieTypeInt := strings.Index(nieTypes, regType)
 	if nieTypeInt < 0 {
 		return false
 	}
@@ -105,7 +105,7 @@ func IsValidNie(nie string) bool {
 		return false
 	}
 
-	return []rune(DNINIE_CHECK_TABLE)[nieInt % 23] == []rune(check)[0]
+	return []rune(dniNieCheckTable)[nieInt % 23] == []rune(check)[0]
 }
 
 /**
@@ -117,7 +117,7 @@ func IsValidNie(nie string) bool {
  * @see https://es.wikipedia.org/wiki/C%C3%B3digo_de_identificaci%C3%B3n_fiscal
  */
 func IsValidOtherPersonalNif(nif string) bool {
-	result, matches, _ := regexMatch(OTHER_PERSONAL_NIF_REGEX, nif)
+	result, matches, _ := regexMatch(otherPersonalNifRegex, nif)
 	if !result {
 		return false
 	}
@@ -134,7 +134,7 @@ func IsValidOtherPersonalNif(nif string) bool {
  * @see https://es.wikipedia.org/wiki/C%C3%B3digo_de_identificaci%C3%B3n_fiscal
  */
 func IsValidCif(cif string) bool {
-	result, matches, _ := regexMatch(CIF_REGEX, cif)
+	result, matches, _ := regexMatch(cifRegex, cif)
 	if !result {
 		return false
 	}
@@ -209,16 +209,16 @@ func isValidNifCheck(nif string, matches map[string]string) bool {
 }
 
 func nifHasLetterCheck(nifType, nif string) bool {
-	return -1 != strings.Index(NIF_TYPES_WITH_LETTER_CHECK, nifType) ||
+	return -1 != strings.Index(nifTypesWithLetterCheck, nifType) ||
 		('0' == []rune(nif)[0] && '0' == []rune(nif)[1])
 }
 
 func checkNifLetter(calculatedCheckDigit int, checkDigit rune) bool {
-	return []rune(NIF_LETTER_CHECK_TABLE)[calculatedCheckDigit] == checkDigit
+	return []rune(nifLetterCheckTable)[calculatedCheckDigit] == checkDigit
 }
 
 func nifHasNumberCheck(nifType string) bool {
-	return -1 != strings.Index(NIF_TYPES_WITH_NUMBER_CHECK, nifType)
+	return -1 != strings.Index(nifTypesWithNumberCheck, nifType)
 }
 
 func checkNifNumber(calculatedCheckDigit int, checkDigit rune) bool {
