@@ -45,7 +45,7 @@ func IsValidEntity(nif string) bool {
  * Just mod 23 the 8 digit number and compare it to the check table
  */
 func IsValidDni(dni string) bool {
-	result, matches, err := pregMatch(DNI_REGEX, dni)
+	result, matches, err := regexMatch(DNI_REGEX, dni)
 	if err != nil {
 		panic(err)
 	}
@@ -78,7 +78,7 @@ func IsValidDni(dni string) bool {
  * The first letter needs an equivalent number before the mod operation
  */
 func IsValidNie(nie string) bool {
-	result, matches, _ := pregMatch(NIE_REGEX, nie)
+	result, matches, _ := regexMatch(NIE_REGEX, nie)
 	if !result {
 		return false
 	}
@@ -120,7 +120,7 @@ func IsValidNie(nie string) bool {
  * @see https://es.wikipedia.org/wiki/C%C3%B3digo_de_identificaci%C3%B3n_fiscal
  */
 func IsValidOtherPersonalNif(nif string) bool {
-	result, matches, _ := pregMatch(OTHER_PERSONAL_NIF_REGEX, nif)
+	result, matches, _ := regexMatch(OTHER_PERSONAL_NIF_REGEX, nif)
 	if !result {
 		return false
 	}
@@ -137,7 +137,7 @@ func IsValidOtherPersonalNif(nif string) bool {
  * @see https://es.wikipedia.org/wiki/C%C3%B3digo_de_identificaci%C3%B3n_fiscal
  */
 func IsValidCif(cif string) bool {
-	result, matches, _ := pregMatch(CIF_REGEX, cif)
+	result, matches, _ := regexMatch(CIF_REGEX, cif)
 	if !result {
 		return false
 	}
