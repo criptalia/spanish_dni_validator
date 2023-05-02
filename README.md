@@ -97,9 +97,9 @@ func main() {
 
     //NIE
     if(dni.IsValidPersonal("X5102754C")) {
-        fmt.Println("93471790C is valid")
+        fmt.Println("X5102754C is valid")
     } else {
-        fmt.Println("93471790C is NOT valid!")
+        fmt.Println("X5102754C is NOT valid!")
     }
 }
 ```
@@ -131,9 +131,9 @@ func main() {
 
     //NIE
     if(dni.IsValidNie("X5102754C")) {
-        fmt.Println("93471790C is valid")
+        fmt.Println("X5102754C is valid")
     } else {
-        fmt.Println("93471790C is NOT valid!")
+        fmt.Println("X5102754C is NOT valid!")
     }
 }
 ```
